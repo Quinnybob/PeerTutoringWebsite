@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Welcome to Peer Tutoring</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    .hero {
+      background: url('https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=1470&q=80') no-repeat center center/cover;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+      text-align: center;
+      position: relative;
+    }
+    .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.6);
+    }
+    .hero-content {
+      position: relative;
+      z-index: 1;
+    }
+    .hero h1 {
+      font-size: 3rem;
+    }
+    .hero p {
+      font-size: 1.5rem;
+    }
+    .btn-group {
+      margin-top: 30px;
+    }
+    .logo {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      z-index: 2;
+    }
+    .logo img {
+      height: 50px;
+    }
+  </style>
+</head>
+<body>
+  <div class="hero">
+    <div class="hero-overlay"></div>
+    <div class="logo">
+      <img src="https://resources.finalsite.net/images/v1724248994/dextersouthfieldorg/qmmfrkbqkybrymu3aiib/Logo.svg" alt="Dexter Southfield logo">
+    </div>
+    <div class="hero-content">
+      <h1>Peer Tutoring at Dexter Southfield</h1>
+      <p>Our Best Today, Better Tomorrow.</p>
+      <div class="btn-group">
+        <a href="/find-tutor" class="btn btn-primary btn-lg">Find a Tutor</a>
+        <a href="/become-tutor" class="btn btn-outline-light btn-lg">Become a Tutor</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

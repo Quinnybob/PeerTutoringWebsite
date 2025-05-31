@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Become a Tutor</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f8f9fa;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    .container {
+      max-width: 800px;
+    }
+    .form-section {
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      margin-top: 100px;
+    }
+    .form-section h1 {
+      color: #11264f;
+    }
+    .form-label {
+      font-weight: bold;
+    }
+    .btn-success {
+      background-color: #11264f;
+      border: none;
+    }
+    .btn-success:hover {
+      background-color: #0e1e3a;
+    }
+    .alert-success {
+      border-color: #cce5ff;
+      background-color: #e6f2ff;
+      color: #004085;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="form-section">
+      <h1 class="text-center mb-4">Become a Tutor</h1>
+
+      {% if success %}
+      <div class="alert alert-success text-center">
+        <h4 class="alert-heading">Registration Successful!</h4>
+        <p>Thank you for registering as a tutor. Your information has been saved.</p>
+      </div>
+      {% endif %}
+
+      <form method="POST">
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label class="form-label">First Name:</label>
+            <input type="text" name="first_name" class="form-control" required>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Last Name:</label>
+            <input type="text" name="last_name" class="form-control" required>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label class="form-label">Email:</label>
+            <input type="email" name="email" class="form-control" required>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Phone:</label>
+            <input type="tel" name="phone" class="form-control" required>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Full Name (as displayed to students):</label>
+          <input type="text" name="display_name" class="form-control" required>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label class="form-label">Grade:</label>
+            <select name="grade" class="form-select" required>
+              <option value="9">9th Grade</option>
+              <option value="10">10th Grade</option>
+              <option value="11">11th Grade</option>
+              <option value="12">12th Grade</option>
+              <option value="College">College</option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">GPA:</label>
+            <input type="number" name="gpa" class="form-control" step="0.01" min="0" max="4.0" required>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Subjects you can tutor:</label>
+          <div class="border rounded p-3" style="max-height: 200px; overflow-y: auto;">
+            <div class="row">
+              {% for subject in subjects %}
+              <div class="col-md-6">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" name="subjects" value="{{ subject }}" id="subject_{{ loop.index }}">
+                  <label class="form-check-label" for="subject_{{ loop.index }}">{{ subject }}</label>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Available Times:</label>
+          <div class="border rounded p-3" style="max-height: 200px; overflow-y: auto;">
+            <div class="row">
+              {% for time in times %}
+              <div class="col-md-6">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" name="times" value="{{ time }}" id="time_{{ loop.index }}">
+                  <label class="form-check-label" for="time_{{ loop.index }}">{{ time }}</label>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center">
+          <button type="submit" class="btn btn-success px-5">Register as Tutor</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
+</html>
