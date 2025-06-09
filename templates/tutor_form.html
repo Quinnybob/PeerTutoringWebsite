@@ -37,6 +37,41 @@
       background-color: #e6f2ff;
       color: #004085;
     }
+    .schedule-wrapper {
+      position: relative;
+      width: fit-content;
+      margin: 0 auto;
+    }
+  
+  .schedule-image {
+    display: block;
+    width: 100%;
+    max-width: 800px;
+  }
+  
+  .block {
+    position: absolute;
+    height: 10%;
+    background-color: rgba(0, 0, 0, 0);
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: transparent;
+    font-weight: bold;
+    font-size: 14px;
+  }
+  
+  .block.selected {
+    background-color: rgb(3, 3, 29);
+    color: white;
+  }
+  
+  .block.selected::after {
+    content: "Tutoring";
+  }
+
   </style>
 </head>
 <body>
@@ -87,7 +122,6 @@
               <option value="10">10th Grade</option>
               <option value="11">11th Grade</option>
               <option value="12">12th Grade</option>
-              <option value="College">College</option>
             </select>
           </div>
           <div class="col-md-6">
@@ -128,9 +162,19 @@
           </div>
         </div>
 
+        <div class="mb-3">
+          <label class="form-label">Schedule:</label>
+          <div id="schedule-wrapper" class="schedule-wrapper">
+            <img src="{{ url_for('static', filename='images/DXSF_Schedule-1.png') }}" alt="Schedule" class="schedule-image">
+          </div>
+        </div>
+
+        <script src="{{ url_for('static', filename='js/schedule_logic.js') }}"></script>
+
         <div class="text-center">
           <button type="submit" class="btn btn-success px-5">Register as Tutor</button>
         </div>
+
       </form>
     </div>
   </div>
