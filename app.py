@@ -2,19 +2,20 @@ from flask import Flask, render_template, request, redirect, url_for, session
 import pandas as pd
 import os
 import csv
+import json
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key_here'
 
 # Read tutor data once at startup
 try:
-    tutoring_df = pd.read_csv('tutors.csv', encoding='latin1')
+    tutoring_df = pd.read_csv('test_tutors.csv', encoding='latin1')
 except FileNotFoundError:
     tutoring_df = pd.DataFrame(columns=[
         'first_name', 'last_name', 'email', 'phone', 
         'display_name', 'grade', 'gpa', 'subjects', 'times'
     ])
-    tutoring_df.to_csv('tutors.csv', index=False, encoding='latin1')
+    tutoring_df.to_csv('test_tutors.csv', index=False, encoding='latin1')
 
 def parse_list(cell):
     if pd.isna(cell):
@@ -26,6 +27,12 @@ STANDARD_SUBJECTS = [
     "Biology", "Chemistry", "Physics",
     "English", "History", "Computer Science"
 ]
+
+# Remove trailing spaces from course names
+with open('courses.json', 'r') as f:
+    course_list = json.load(f)
+course_list = [course.rstrip() for course in course_list]
+
 
 TIME_SLOTS = [
     "Monday 3-5", "Monday 5-7",
@@ -70,10 +77,16 @@ def find_tutor():
         subjects = set(request.form.getlist('subjects'))
         times = set(request.form.getlist('times'))
         results = match_student_to_tutors(subjects, times)
-        return render_template('index.html', name=name, results=results,
-                               subjects=STANDARD_SUBJECTS, times=TIME_SLOTS)
-    return render_template('index.html', results=None,
-                           subjects=STANDARD_SUBJECTS, times=TIME_SLOTS)
+        return render_template('student_form.html', 
+                               name=name, 
+                               results=results,
+                               subjects=STANDARD_SUBJECTS, 
+                               times=TIME_SLOTS)
+    return render_template('student_form.html', 
+                           results=None,
+                           subjects=STANDARD_SUBJECTS, 
+                           classes=course_list,
+                           times=TIME_SLOTS)
 
 @app.route('/become-tutor', methods=['GET', 'POST'])
 def become_tutor():
@@ -90,17 +103,19 @@ def become_tutor():
             'subjects': ';'.join(request.form.getlist('subjects')),
             'times': ';'.join(request.form.getlist('times'))
         }
-        file_exists = os.path.isfile('tutors.csv')
-        with open('tutors.csv', 'a', newline='', encoding='latin1') as f:
+        file_exists = os.path.isfile('test_tutors.csv')
+        with open('test_tutors.csv', 'a', newline='', encoding='latin1') as f:
             writer = csv.DictWriter(f, fieldnames=new_tutor.keys())
             if not file_exists:
                 writer.writeheader()
             writer.writerow(new_tutor)
         global tutoring_df
-        tutoring_df = pd.read_csv('tutors.csv', encoding='latin1')
+        tutoring_df = pd.read_csv('test_tutors.csv', encoding='latin1')
         success = True
-    return render_template('tutor_form.html', subjects=STANDARD_SUBJECTS,
-                           times=TIME_SLOTS, success=success)
+    return render_template('tutor_form.html', 
+                           subjects=STANDARD_SUBJECTS,
+                           times=TIME_SLOTS, 
+                           success=success)
 
 def check_user_credentials(email, password):
     if not os.path.exists('users.csv'):
