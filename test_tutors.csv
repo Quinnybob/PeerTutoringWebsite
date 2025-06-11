@@ -1,0 +1,2 @@
+first_name,last_name,email,phone,display_name,grade,gpa,subjects,times
+Test,One,test@example.com,1234567890,Test One,10,3.2,Algebra 1;Algebra 2;Geometry;Precalculus;Calculus,Monday 3-5;Monday 5-7;Thursday 3-5;Thursday 5-7
