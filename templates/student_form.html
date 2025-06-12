@@ -130,6 +130,40 @@
       cursor: pointer;
       vertical-align: top;
     }
+    .schedule-wrapper {
+      position: relative;
+      width: fit-content;
+      margin: 0 auto;
+    }
+    
+    .schedule-image {
+      display: block;
+      width: 100%;
+      max-width: 800px;
+    }
+    
+    .block {
+      position: absolute;
+      height: 10%;
+      background-color: rgba(0, 0, 0, 0);
+      cursor: pointer;
+      transition: background-color 0.2s, border-color 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: transparent;
+      font-weight: bold;
+      font-size: 14px;
+    }
+    
+    .block.selected {
+      background-color: rgb(3, 3, 29);
+      color: white;
+    }
+    
+    .block.selected::after {
+      content: "Tutoring";
+    }
   </style>
 </head>
 <body>
@@ -146,36 +180,48 @@
         });
       });
     </script>
+    
+    {% if results %}
+    <div class="mt-5">
+      <h2 class="text-center mb-4">Results for {{ name }}</h2>
+      <div class="row">
+        {% for match in results %}
+        <div class="col-md-6">
+          <div class="card mb-4 shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title">{{ match.subject }}</h5>
+              <p class="card-text">
+                {% if match.tutor %}
+                <strong>Tutor:</strong> {{ match.tutor }}<br>
+                <strong>Match Score:</strong> {{ match.score }}<br>
+                <strong>Times:</strong> {{ match.times }}<br>
+                {% else %}
+                <strong>No suitable tutor found</strong> (email Ms. Kent for help)
+                {% endif %}
+              </p>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
 
     <div class="form-section">
       <h1 class="text-center mb-4">Find a Tutor</h1>
       <form method="POST">
         <div class="mb-3">
-          <label class="form-label">Your Name</label>
+          <label class="form-label">Your Name:</label>
           <input type="text" name="name" class="form-control" placeholder="Enter your name" required>
         </div>
 
-        <label class="form-label">Select Subjects:</label>
-        <div class="border rounded p-3" style="max-height: 200px; overflow-y: auto;">
-          <div class="row">
-            {% for subject in subjects %}
-            <div class="col-md-6">
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="subjects" value="{{ subject }}" id="sub_{{ loop.index }}">
-                <label class="form-check-label" for="sub_{{ loop.index }}">{{ subject }}</label>
-              </div>
-            </div>
-            {% endfor %}
-          </div>
-        </div>
-
         <div class="mb-3">
-          <label class="form-label">Select Classes</label>
-          <input type="text" id="search-class-input" class="form-control search-class-input" onkeyup="searchClasses()" placeholder="Search for a class">
+          <label class="form-label">Select Classes:</label>
+            <input type="text" id="search-class-input" class="form-control search-class-input" onkeyup="searchClasses()" placeholder="Search for a class">
         </div>
 
         <ul id="all-class-list" class="all-class-list" style="display: none;">
-          {% for class in classes %}
+          {% for class in subjects %}
           <li>
             <a>{{ class }}</a>
             <button type="button" class="add-class-btn" onclick="selectClass(this)">Add Class</button>
@@ -188,7 +234,7 @@
           
         <div class="mb-3">
           <div class="d-flex align-items-center">
-            <label class="form-label mb-0">Rank Your Classes</label>
+            <label class="form-label mb-0">Rank Your Classes:</label>
             <div class="tooltip-wrapper ms-1">
               <img src="{{ url_for('static', filename='images/help_tooltip.png') }}" 
                    alt="Info" 
@@ -204,47 +250,22 @@
         </div>
 
         <div class="mb-3">
-          <label class="form-label">Available Times:</label>
-          <div class="border rounded p-3" style="max-height: 200px; overflow-y: auto;">
-            <div class="row">
-              {% for time in times %}
-              <div class="col-md-6">
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" name="times" value="{{ time }}" id="time_{{ loop.index }}">
-                  <label class="form-check-label" for="time_{{ loop.index }}">{{ time }}</label>
-                </div>
-              </div>
-              {% endfor %}
-            </div>
+          <label class="form-label">Select Available Times:</label>
+          <div id="schedule-wrapper" class="schedule-wrapper">
+            <img src="{{ url_for('static', filename='images/DXSF_Schedule-1.png') }}" alt="Schedule" class="schedule-image">
           </div>
         </div>
+
+        <script src="{{ url_for('static', filename='js/schedule_logic.js') }}"></script>
+
+        <div id="selected-classes-hidden" style="display: none;"></div>
+        <div id="selected-times-hidden" style="display: none;"></div>
 
         <div class="text-center">
           <button type="submit" class="btn btn-primary px-5">Find Tutor</button>
         </div>
       </form>
     </div>
-
-    {% if results %}
-    <div class="mt-5">
-      <h2 class="text-center mb-4">Results for {{ name }}</h2>
-      <div class="row">
-        {% for match in results %}
-        <div class="col-md-6">
-          <div class="card mb-4 shadow-sm">
-            <div class="card-body">
-              <h5 class="card-title">{{ match.subject }}</h5>
-              <p class="card-text">
-                <strong>Tutor:</strong> {{ match.tutor }}<br>
-                <strong>Match Score:</strong> {{ match.score }}
-              </p>
-            </div>
-          </div>
-        </div>
-        {% endfor %}
-      </div>
-    </div>
-    {% endif %}
   </div>
 </body>
 </html>

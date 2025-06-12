@@ -9,6 +9,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 
 COURSE_LIST = "courses.json"
+
 options = Options()
 options.add_argument("--headless=new")
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)

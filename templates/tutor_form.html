@@ -42,35 +42,35 @@
       width: fit-content;
       margin: 0 auto;
     }
-  
-  .schedule-image {
-    display: block;
-    width: 100%;
-    max-width: 800px;
-  }
-  
-  .block {
-    position: absolute;
-    height: 10%;
-    background-color: rgba(0, 0, 0, 0);
-    cursor: pointer;
-    transition: background-color 0.2s, border-color 0.2s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: transparent;
-    font-weight: bold;
-    font-size: 14px;
-  }
-  
-  .block.selected {
-    background-color: rgb(3, 3, 29);
-    color: white;
-  }
-  
-  .block.selected::after {
-    content: "Tutoring";
-  }
+    
+    .schedule-image {
+      display: block;
+      width: 100%;
+      max-width: 800px;
+    }
+
+    .block {
+      position: absolute;
+      height: 10%;
+      background-color: rgba(0, 0, 0, 0);
+      cursor: pointer;
+      transition: background-color 0.2s, border-color 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: transparent;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .block.selected {
+      background-color: rgb(3, 3, 29);
+      color: white;
+    }
+
+    .block.selected::after {
+      content: "Tutoring";
+    }
 
   </style>
 </head>
@@ -126,7 +126,7 @@
           </div>
           <div class="col-md-6">
             <label class="form-label">GPA:</label>
-            <input type="number" name="gpa" class="form-control" step="0.01" min="0" max="4.0" required>
+            <input type="number" name="gpa" class="form-control" step="0.01" min="0" max="5.0" required>
           </div>
         </div>
 
@@ -147,29 +147,15 @@
         </div>
 
         <div class="mb-3">
-          <label class="form-label">Available Times:</label>
-          <div class="border rounded p-3" style="max-height: 200px; overflow-y: auto;">
-            <div class="row">
-              {% for time in times %}
-              <div class="col-md-6">
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" name="times" value="{{ time }}" id="time_{{ loop.index }}">
-                  <label class="form-check-label" for="time_{{ loop.index }}">{{ time }}</label>
-                </div>
-              </div>
-              {% endfor %}
-            </div>
-          </div>
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label">Schedule:</label>
+          <label class="form-label">Select Available Times:</label>
           <div id="schedule-wrapper" class="schedule-wrapper">
             <img src="{{ url_for('static', filename='images/DXSF_Schedule-1.png') }}" alt="Schedule" class="schedule-image">
           </div>
         </div>
 
         <script src="{{ url_for('static', filename='js/schedule_logic.js') }}"></script>
+        
+        <div id="selected-times-hidden" style="display: none;"></div>
 
         <div class="text-center">
           <button type="submit" class="btn btn-success px-5">Register as Tutor</button>
