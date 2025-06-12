@@ -54,7 +54,6 @@ if not os.path.exists(COURSE_LIST):
     # second index is specific class in the section
     # print(all_classes[0][0])
 
-    # Flatten the 2D list all_classes into a 1D list
     course_list = [item for sublist in all_classes for item in sublist]
     course_list = [course.rstrip() for course in course_list]
 

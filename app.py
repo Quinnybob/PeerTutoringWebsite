@@ -20,7 +20,7 @@ except FileNotFoundError:
 def parse_list(cell):
     if pd.isna(cell):
         return set()
-    return set(item.strip().lower().replace('�', '') for item in cell.split(';') if item.strip())
+    return set(item.strip().replace('�', '') for item in cell.split(';') if item.strip())
 
 STANDARD_SUBJECTS = [
     "Algebra 1", "Algebra 2", "Geometry", "Precalculus", "Calculus",
@@ -33,35 +33,28 @@ with open('courses.json', 'r') as f:
     course_list = json.load(f)
 course_list = [course.rstrip() for course in course_list]
 
-
-TIME_SLOTS = [
-    "Monday 3-5", "Monday 5-7",
-    "Tuesday 3-5", "Tuesday 5-7",
-    "Wednesday 3-5", "Wednesday 5-7",
-    "Thursday 3-5", "Thursday 5-7",
-    "Friday 3-5", "Friday 5-7"
-]
-
 def match_student_to_tutors(student_subjects, student_times):
     matches = []
+    #print(student_times)
     for subject in student_subjects:
         best_tutor = None
         best_score = 0
-        best_subjects = set()
         for _, tutor in tutoring_df.iterrows():
             tutor_subjects = parse_list(tutor.iloc[7])
             tutor_times = parse_list(tutor.iloc[8])
-            if subject.lower() in tutor_subjects:
+            print(tutor_times)
+            if subject in tutor_subjects:
                 shared_times = student_times & tutor_times
-                score = 1 + 0.5 * len(shared_times)
+                #print(shared_times)
+                score = 0.5 * len(shared_times) # TODO: make this score more extensive
                 if score > best_score:
                     best_score = score
                     best_tutor = tutor.iloc[4]  # display_name
-                    best_subjects = {subject}
         matches.append({
             'subject': subject,
             'tutor': best_tutor or "No suitable tutor found",
             'score': round(best_score, 2),
+            'times': shared_times,
             'matched_for': subject
         })
     return matches
@@ -80,13 +73,11 @@ def find_tutor():
         return render_template('student_form.html', 
                                name=name, 
                                results=results,
-                               subjects=STANDARD_SUBJECTS, 
-                               times=TIME_SLOTS)
+                               subjects=course_list, 
+                               times=times)
     return render_template('student_form.html', 
                            results=None,
-                           subjects=STANDARD_SUBJECTS, 
-                           classes=course_list,
-                           times=TIME_SLOTS)
+                           subjects=course_list)
 
 @app.route('/become-tutor', methods=['GET', 'POST'])
 def become_tutor():
@@ -114,7 +105,6 @@ def become_tutor():
         success = True
     return render_template('tutor_form.html', 
                            subjects=STANDARD_SUBJECTS,
-                           times=TIME_SLOTS, 
                            success=success)
 
 def check_user_credentials(email, password):

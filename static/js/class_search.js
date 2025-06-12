@@ -29,16 +29,8 @@ let selectedClasses = new Set();
           function selectClass(button) {
             const listItem = button.parentElement;
             const className = listItem.querySelector('a').textContent;
-            console.log(className);
-            if (selectedClasses.has(className)) {
-                // Remove class if already selected
-                selectedClasses.delete(className);
-                button.textContent = 'Add Class';
-                button.classList.remove('selected');
-                button.style.filter = '';
-                button.disabled = false;
-            } else {
-                // Add class if not selected
+            //console.log(className);
+            if (!selectedClasses.has(className)) {
                 selectedClasses.add(className);
                 button.textContent = 'Added';
                 button.classList.add('selected');
@@ -52,6 +44,10 @@ let selectedClasses = new Set();
             const selectedList = document.getElementById('selected-class-list');
             selectedList.innerHTML = ''; // Clear current list
             
+            // Update hidden inputs for form submission
+            const hiddenDiv = document.getElementById('selected-classes-hidden');
+            hiddenDiv.innerHTML = '';
+
             if (selectedClasses.size === 0) {
               const li = document.createElement('li');
               li.style.cssText = "padding: 2px;";
@@ -63,11 +59,18 @@ let selectedClasses = new Set();
               const li = document.createElement('li');
               li.className = 'selected-class-item';
               li.innerHTML = `
-                <input type="number" name="priority_rank" step="1" min="1" max="${selectedClasses.size}" value="1">
+                <input type="number" name="priority_rank" step="1" min="1" max="${selectedClasses.size}">
                 ${className}
                 <button type="button" class="add-class-btn selected" onclick="removeSelectedClass('${className}')">Remove</button>
               `;
               selectedList.appendChild(li);
+
+              // Add hidden input for form submission
+              const input = document.createElement('input');
+              input.type = 'hidden';
+              input.name = 'subjects';
+              input.value = className;
+              hiddenDiv.appendChild(input);
             });
           }
 
