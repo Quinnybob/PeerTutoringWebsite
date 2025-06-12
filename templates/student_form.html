@@ -180,6 +180,32 @@
         });
       });
     </script>
+    
+    {% if results %}
+    <div class="mt-5">
+      <h2 class="text-center mb-4">Results for {{ name }}</h2>
+      <div class="row">
+        {% for match in results %}
+        <div class="col-md-6">
+          <div class="card mb-4 shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title">{{ match.subject }}</h5>
+              <p class="card-text">
+                {% if match.tutor %}
+                <strong>Tutor:</strong> {{ match.tutor }}<br>
+                <strong>Match Score:</strong> {{ match.score }}<br>
+                <strong>Times:</strong> {{ match.times }}<br>
+                {% else %}
+                <strong>No suitable tutor found</strong> (email Ms. Kent for help)
+                {% endif %}
+              </p>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
 
     <div class="form-section">
       <h1 class="text-center mb-4">Find a Tutor</h1>
@@ -188,21 +214,7 @@
           <label class="form-label">Your Name:</label>
           <input type="text" name="name" class="form-control" placeholder="Enter your name" required>
         </div>
-<!--
-        <label class="form-label">Select Subjects:</label>
-        <div class="border rounded p-3" style="max-height: 200px; overflow-y: auto;">
-          <div class="row">
-            {% for subject in subjects %}
-            <div class="col-md-6">
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="subjects" value="{{ subject }}" id="sub_{{ loop.index }}">
-                <label class="form-check-label" for="sub_{{ loop.index }}">{{ subject }}</label>
-              </div>
-            </div>
-            {% endfor %}
-          </div>
-        </div>
--->
+
         <div class="mb-3">
           <label class="form-label">Select Classes:</label>
             <input type="text" id="search-class-input" class="form-control search-class-input" onkeyup="searchClasses()" placeholder="Search for a class">
@@ -236,23 +248,7 @@
             <li style="padding: 2px;"><a>N/A</a></li>
           </ul>
         </div>
-<!--
-        <div class="mb-3">
-          <label class="form-label">Available Times:</label>
-          <div class="border rounded p-3" style="max-height: 200px; overflow-y: auto;">
-            <div class="row">
-              {% for time in times %}
-              <div class="col-md-6">
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" name="times" value="{{ time }}" id="time_{{ loop.index }}">
-                  <label class="form-check-label" for="time_{{ loop.index }}">{{ time }}</label>
-                </div>
-              </div>
-              {% endfor %}
-            </div>
-          </div>
-        </div>
--->
+
         <div class="mb-3">
           <label class="form-label">Select Available Times:</label>
           <div id="schedule-wrapper" class="schedule-wrapper">
@@ -270,28 +266,6 @@
         </div>
       </form>
     </div>
-
-    {% if results %}
-    <div class="mt-5">
-      <h2 class="text-center mb-4">Results for {{ name }}</h2>
-      <div class="row">
-        {% for match in results %}
-        <div class="col-md-6">
-          <div class="card mb-4 shadow-sm">
-            <div class="card-body">
-              <h5 class="card-title">{{ match.subject }}</h5>
-              <p class="card-text">
-                <strong>Tutor:</strong> {{ match.tutor }}<br>
-                <strong>Match Score:</strong> {{ match.score }}<br>
-                <strong>Times:</strong> {{ match.times }}<br>
-              </p>
-            </div>
-          </div>
-        </div>
-        {% endfor %}
-      </div>
-    </div>
-    {% endif %}
   </div>
 </body>
 </html>

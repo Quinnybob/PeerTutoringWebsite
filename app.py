@@ -39,6 +39,7 @@ def match_student_to_tutors(student_subjects, student_times):
     for subject in student_subjects:
         best_tutor = None
         best_score = 0
+        shared_times = set()
         for _, tutor in tutoring_df.iterrows():
             tutor_subjects = parse_list(tutor.iloc[7])
             tutor_times = parse_list(tutor.iloc[8])
@@ -52,7 +53,7 @@ def match_student_to_tutors(student_subjects, student_times):
                     best_tutor = tutor.iloc[4]  # display_name
         matches.append({
             'subject': subject,
-            'tutor': best_tutor or "No suitable tutor found",
+            'tutor': best_tutor, # or "No suitable tutor found (email Ms. Kent for help)"
             'score': round(best_score, 2),
             'times': shared_times,
             'matched_for': subject

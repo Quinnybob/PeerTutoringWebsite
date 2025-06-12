@@ -5,7 +5,6 @@ let left_margins = [4.8, 23.8, 43, 62.2, 81.3];
 let heights = [10.55, 10.5, 10.62, 7.2, 14.4, 14.65, 10.5];
 let widths = [18.1, 18.25, 18.2, 18.1, 18.15];
 
-// Define the blocks data structure
 const blocks = {
     Mon: ['A', 'B', 'C', 'Conf', 'D', 'E', 'F', 'Common'],
     Tue: ['D', 'E', 'Pub_Speaking', 'Conf', 'F', 'G', 'A', 'B'],
@@ -14,7 +13,6 @@ const blocks = {
     Fri: ['C', 'D', 'E', 'F', 'G', 'X']
 };
 
-// Create all blocks
 Object.entries(blocks).forEach(([day, sections]) => {
     const dayIndex = days.indexOf(day);
     sections.forEach((section, index) => {
@@ -61,14 +59,10 @@ Object.entries(blocks).forEach(([day, sections]) => {
     });
 });
 
-
-
-// Add click event listeners
 document.querySelectorAll('.block').forEach(block => {
     block.addEventListener('click', () => {
         block.classList.toggle('selected');
     
-        // Get selected blocks
         const selected = [...document.querySelectorAll('.block.selected')]
             .map(b => b.dataset.block);
     
