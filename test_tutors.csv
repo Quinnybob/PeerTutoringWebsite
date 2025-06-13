@@ -1,5 +1,5 @@
 first_name,last_name,email,phone,display_name,grade,gpa,subjects,times
-Test,One,test@example.com,1234567890,Test One,10,3.2,Algebra 1;Algebra 2;Geometry;Precalculus;Calculus,E_Mon;F_Mon;B_Thu;C_Thu
 Spanish,Master,test2@example.com,1234567890,Sr. Español,11,3.4,Spanish III Accelerated;Spanish III Honors,Conf_Mon;Conf_Tue;Conf_Thu;
 Science,Expert,ilove@science.com,1234567890,Dr. Science,12,4.0,AP Chemistry;AP Physics Mechanics;AP Biology,X_Wed;X_Thu;X_Fri
 Best,Coder,awesome@program.com,1234567890,Ms. HTML,12,4.0,AP Computer Science,A_Mon;A_Tue;A_Wed;A_Thu
+William,Williams,wcw@imagists.com,1234567890,William Carlos Williams,12,5.0,AP English Literature and Composition;AP English Language and Composition,Conf_Mon;G_Tue;G_Wed;Conf_Thu;D_Fri;X_Fri
