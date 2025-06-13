@@ -105,7 +105,7 @@ def become_tutor():
         tutoring_df = pd.read_csv('test_tutors.csv', encoding='latin1')
         success = True
     return render_template('tutor_form.html', 
-                           subjects=STANDARD_SUBJECTS,
+                           subjects=course_list,
                            success=success)
 
 def check_user_credentials(email, password):

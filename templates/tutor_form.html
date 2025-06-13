@@ -12,12 +12,19 @@
     .container {
       max-width: 800px;
     }
+    .header-logo {
+      text-align: center;
+      margin-top: 30px;
+    }
+    .header-logo img {
+      height: 60px;
+    }
     .form-section {
       background-color: white;
       padding: 30px;
       border-radius: 10px;
       box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-      margin-top: 100px;
+      margin-top: 30px;
     }
     .form-section h1 {
       color: #11264f;
@@ -36,6 +43,92 @@
       border-color: #cce5ff;
       background-color: #e6f2ff;
       color: #004085;
+    }
+    .search-class-input {
+      background-image: url('/static/images/search_icon.png');
+      background-position: 10px center;
+      background-repeat: no-repeat;
+      background-size: 18px 18px;
+      padding-left: 40px;
+      width: 100%;
+      font-size: 16px;
+      padding: 12px 20px 12px 40px;
+      border: 1px solid #ddd;
+      margin-bottom: 12px;
+    }
+
+    .all-class-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .all-class-list li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .all-class-list li a {
+      flex-grow: 1;
+      margin-right: 10px;
+      text-decoration: none;
+      color: black;
+      font-size: 16px;
+    }
+
+    .all-class-list li a:hover {
+      color: #11264f;
+    }
+
+    .add-class-btn {
+      margin-left: 10px;
+      background-color: #11264f;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .add-class-btn:hover {
+      opacity: 0.9;
+      /* background-color: #7192d4; */
+    }
+
+    .add-class-btn.selected {
+      background-color: #dc3545;
+    }
+
+    #selected-class-list {
+      list-style: none;
+      padding: 0;
+    }
+    
+    .selected-class-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px;
+      border-bottom: 1px solid #ddd;
+    }
+    
+    .remove-class-btn {
+      margin-left: 10px;
+    }
+
+    .selected-class-item .add-class-btn {
+      margin-left: 10px;
+      font-size: 0.9em;
+    }
+
+    .info-icon {
+      width: 15px;
+      height: 15px;
+      cursor: pointer;
+      vertical-align: top;
     }
     .schedule-wrapper {
       position: relative;
@@ -76,6 +169,10 @@
 </head>
 <body>
   <div class="container">
+    <div class="header-logo">
+      <img src="https://resources.finalsite.net/images/v1724248994/dextersouthfieldorg/qmmfrkbqkybrymu3aiib/Logo.svg" alt="Dexter Southfield Logo">
+    </div>
+
     <div class="form-section">
       <h1 class="text-center mb-4">Become a Tutor</h1>
 
@@ -129,7 +226,7 @@
             <input type="number" name="gpa" class="form-control" step="0.01" min="0" max="5.0" required>
           </div>
         </div>
-
+<!--
         <div class="mb-3">
           <label class="form-label">Subjects you can tutor:</label>
           <div class="border rounded p-3" style="max-height: 200px; overflow-y: auto;">
@@ -145,6 +242,40 @@
             </div>
           </div>
         </div>
+-->
+        <div class="mb-3">
+          <label class="form-label">Select Classes:</label>
+            <input type="text" id="search-class-input" class="form-control search-class-input" onkeyup="searchClasses()" placeholder="Search for a class">
+        </div>
+
+        <ul id="all-class-list" class="all-class-list" style="display: none;">
+          {% for class in subjects %}
+          <li>
+            <a>{{ class }}</a>
+            <button type="button" class="add-class-btn" onclick="selectClass(this)">Add Class</button>
+          </li>
+          {% endfor %}
+        </ul>
+        <div style="margin-bottom: 40px;"></div>
+
+        <script src="{{ url_for('static', filename='js/class_search.js') }}"></script>
+          
+        <div class="mb-3">
+          <div class="d-flex align-items-center">
+            <label class="form-label mb-0">Rank Your Classes:</label>
+            <div class="tooltip-wrapper ms-1">
+              <img src="{{ url_for('static', filename='images/help_tooltip.png') }}" 
+                   alt="Info" 
+                   class="info-icon" 
+                   data-bs-toggle="tooltip" 
+                   data-bs-placement="top" 
+                   title="Rank classes by priority, with 1 as the highest. Use equal values for classes of equal priority.">
+            </div>
+          </div>
+          <ul id="selected-class-list" class="form-control" style="padding: 8px 16px; ">
+            <li style="padding: 2px;"><a>N/A</a></li>
+          </ul>
+        </div>
 
         <div class="mb-3">
           <label class="form-label">Select Available Times:</label>
@@ -155,6 +286,7 @@
 
         <script src="{{ url_for('static', filename='js/schedule_logic.js') }}"></script>
         
+        <div id="selected-classes-hidden" style="display: none;"></div>
         <div id="selected-times-hidden" style="display: none;"></div>
 
         <div class="text-center">
