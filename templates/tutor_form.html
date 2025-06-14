@@ -4,6 +4,16 @@
   <meta charset="UTF-8">
   <title>Become a Tutor</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+      var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+      });
+    });
+  </script>
   <style>
     body {
       background-color: #f8f9fa;
@@ -95,7 +105,6 @@
 
     .add-class-btn:hover {
       opacity: 0.9;
-      /* background-color: #7192d4; */
     }
 
     .add-class-btn.selected {
@@ -226,25 +235,11 @@
             <input type="number" name="gpa" class="form-control" step="0.01" min="0" max="5.0" required>
           </div>
         </div>
-<!--
-        <div class="mb-3">
-          <label class="form-label">Subjects you can tutor:</label>
-          <div class="border rounded p-3" style="max-height: 200px; overflow-y: auto;">
-            <div class="row">
-              {% for subject in subjects %}
-              <div class="col-md-6">
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" name="subjects" value="{{ subject }}" id="subject_{{ loop.index }}">
-                  <label class="form-check-label" for="subject_{{ loop.index }}">{{ subject }}</label>
-                </div>
-              </div>
-              {% endfor %}
-            </div>
-          </div>
-        </div>
--->
+
         <div class="mb-3">
           <label class="form-label">Select Classes:</label>
+            <h6>Add the classes you are comfortable teaching. 
+              <a href="https://www.dextersouthfield.org/course-catalog-welcome/course-catalog-25" target="_blank">View the course catalog here.</a></h6>
             <input type="text" id="search-class-input" class="form-control search-class-input" onkeyup="searchClasses()" placeholder="Search for a class">
         </div>
 
@@ -269,7 +264,7 @@
                    class="info-icon" 
                    data-bs-toggle="tooltip" 
                    data-bs-placement="top" 
-                   title="Rank classes by priority, with 1 as the highest. Use equal values for classes of equal priority.">
+                   title="Rank classes by how comfortable you are teaching them, with 1 as the highest. Use equal values for classes of equal comfort.">
             </div>
           </div>
           <ul id="selected-class-list" class="form-control" style="padding: 8px 16px; ">

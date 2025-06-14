@@ -29,7 +29,6 @@ let selectedClasses = new Set();
           function selectClass(button) {
             const listItem = button.parentElement;
             const className = listItem.querySelector('a').textContent;
-            //console.log(className);
             if (!selectedClasses.has(className)) {
                 selectedClasses.add(className);
                 button.textContent = 'Added';

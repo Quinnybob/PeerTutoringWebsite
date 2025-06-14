@@ -6,6 +6,14 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+      var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+      });
+    });
+  </script>
   <style>
     body {
       background-color: #f8f9fa;
@@ -95,7 +103,6 @@
 
     .add-class-btn:hover {
       opacity: 0.9;
-      /* background-color: #7192d4; */
     }
 
     .add-class-btn.selected {
@@ -171,15 +178,6 @@
     <div class="header-logo">
       <img src="https://resources.finalsite.net/images/v1724248994/dextersouthfieldorg/qmmfrkbqkybrymu3aiib/Logo.svg" alt="Dexter Southfield Logo">
     </div>
-
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-        var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
-          return new bootstrap.Tooltip(tooltipTriggerEl);
-        });
-      });
-    </script>
     
     {% if results %}
     <div class="mt-5">

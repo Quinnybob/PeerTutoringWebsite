@@ -28,8 +28,6 @@ Object.entries(blocks).forEach(([day, sections]) => {
             index += 1;
         }
         block.dataset.block = `${section}_${day}`;
-        //block.dataset.block = `${section}_${day}_${index}`;
-        //console.log(block.dataset.block);
         block.style.top = top_margins[index] + '%';
         block.style.left = left_margins[dayIndex] + '%';
         block.style.height = heights[index] + '%';
@@ -66,7 +64,6 @@ document.querySelectorAll('.block').forEach(block => {
         const selected = [...document.querySelectorAll('.block.selected')]
             .map(b => b.dataset.block);
     
-        console.log("Selected blocks:", selected);
         const hiddenDiv = document.getElementById('selected-times-hidden');
         hiddenDiv.innerHTML = '';
         selected.forEach(block => {

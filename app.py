@@ -22,12 +22,6 @@ def parse_list(cell):
         return set()
     return set(item.strip().replace('�', '') for item in cell.split(';') if item.strip())
 
-STANDARD_SUBJECTS = [
-    "Algebra 1", "Algebra 2", "Geometry", "Precalculus", "Calculus",
-    "Biology", "Chemistry", "Physics",
-    "English", "History", "Computer Science"
-]
-
 # Remove trailing spaces from course names
 with open('courses.json', 'r') as f:
     course_list = json.load(f)
@@ -43,17 +37,15 @@ def match_student_to_tutors(student_subjects, student_times):
         for _, tutor in tutoring_df.iterrows():
             tutor_subjects = parse_list(tutor.iloc[7])
             tutor_times = parse_list(tutor.iloc[8])
-            print(tutor_times)
             if subject in tutor_subjects:
                 shared_times = student_times & tutor_times
-                #print(shared_times)
                 score = 0.5 * len(shared_times) # TODO: make this score more extensive
                 if score > best_score:
                     best_score = score
                     best_tutor = tutor.iloc[4]  # display_name
         matches.append({
             'subject': subject,
-            'tutor': best_tutor, # or "No suitable tutor found (email Ms. Kent for help)"
+            'tutor': best_tutor,
             'score': round(best_score, 2),
             'times': shared_times,
             'matched_for': subject
