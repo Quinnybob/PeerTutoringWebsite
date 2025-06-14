@@ -26,7 +26,7 @@ def get_class_names(driver, wait, tab_index, element_ids):
 
 if not os.path.exists(COURSE_LIST):
     driver.get('https://www.dextersouthfield.org/course-catalog-welcome/course-catalog-25')
-    print(driver.title)
+    # print(driver.title)
 
     wait = WebDriverWait(driver, timeout=2)
 
@@ -48,7 +48,6 @@ if not os.path.exists(COURSE_LIST):
     for tab_index, element_ids in subject_elements.items():
         subject_name = tab_nav_tabs[tab_index].text
         all_classes = get_class_names(driver, wait, tab_index, element_ids)
-        #print(f"\n{subject_name} Classes:")
 
     # first index of all_classes is whole section (i.e. Standard English, English Electives, Standard Math, etc.)
     # second index is specific class in the section

@@ -29,7 +29,6 @@ let selectedClasses = new Set();
           function selectClass(button) {
             const listItem = button.parentElement;
             const className = listItem.querySelector('a').textContent;
-            //console.log(className);
             if (!selectedClasses.has(className)) {
                 selectedClasses.add(className);
                 button.textContent = 'Added';
@@ -44,7 +43,6 @@ let selectedClasses = new Set();
             const selectedList = document.getElementById('selected-class-list');
             selectedList.innerHTML = ''; // Clear current list
             
-            // Update hidden inputs for form submission
             const hiddenDiv = document.getElementById('selected-classes-hidden');
             hiddenDiv.innerHTML = '';
 
