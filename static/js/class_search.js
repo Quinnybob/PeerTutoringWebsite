@@ -43,6 +43,7 @@ let selectedClasses = new Set();
             const selectedList = document.getElementById('selected-class-list');
             selectedList.innerHTML = ''; // Clear current list
             
+            // Update hidden inputs for form submission
             const hiddenDiv = document.getElementById('selected-classes-hidden');
             hiddenDiv.innerHTML = '';
 

@@ -29,6 +29,7 @@ course_list = [course.rstrip() for course in course_list]
 
 def match_student_to_tutors(student_subjects, student_times):
     matches = []
+    #print(student_times)
     for subject in student_subjects:
         best_tutor = None
         best_score = 0
